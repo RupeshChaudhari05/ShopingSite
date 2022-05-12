@@ -56,14 +56,14 @@ const Header = () => {
                 <li><Link to="./shop-grid.html">Shop</Link></li>
                 <li><Link to="#">Pages</Link>
                   <ul className="header__menu__dropdown">
-                    <li><Link to="./shop-details.html">Shop Details</Link></li>
-                    <li><Link to="./shoping-cart.html">Shoping Cart</Link></li>
-                    <li><Link to="./checkout.html">Check Out</Link></li>
-                    <li><Link to="./blog-details.html">Blog Details</Link></li>
+                    <li><Link to="/">Shop Details</Link></li>
+                    <li><Link to="/">Shoping Cart</Link></li>
+                    <li><Link to="/">Check Out</Link></li>
+                    <li><Link to="/">Blog Details</Link></li>
                   </ul>
                 </li>
-                <li><Link to="./blog.html">Blog</Link></li>
-                <li><Link to="./contact.html">Contact</Link></li>
+                <li><Link to="/">Blog</Link></li>
+                <li><Link to="/">Contact</Link></li>
               </ul>
             </nav>
           </div>
@@ -71,7 +71,7 @@ const Header = () => {
             <div className="header__cart">
               <ul>
                 <li><Link to="#"><i className="fa fa-heart"></i> <span>1</span></Link></li>
-                <li><Link to="#"><i className="fa fa-shopping-bag"></i> <span>3</span></Link></li>
+                <li><Link to="/cart"><i className="fa fa-shopping-bag"></i> <span>3</span></Link></li>
               </ul>
               <div className="header__cart__price">item: <span>$150.00</span></div>
             </div>

@@ -18,13 +18,14 @@ const Sidebar = () => {
           <ul>
             {
               data.map((item, i) => {
-                return <li key={i}><Link to="/">{item.toUpperCase()}</Link></li>
+                return <li key={i}><Link to={`category/${item}`}>{item.toUpperCase()}</Link></li>
               })
             }
 
 
           </ul>
         }
+        <span>{error}</span>
       </div>
     </>
   )
