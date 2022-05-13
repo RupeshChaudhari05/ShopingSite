@@ -9,7 +9,7 @@ const TopBar = (props) => {
           <div className="row">
             <div className="col-lg-12 text-center">
               <div className="breadcrumb__text">
-                <h2>{props.title}</h2>
+                <h2>{props.loding ? props.title : <div>Lodding...</div>}</h2>
                 <div className="breadcrumb__option">
                   <Link to="/">Home</Link>
                   <span>{props.title}</span>

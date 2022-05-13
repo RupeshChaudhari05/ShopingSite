@@ -1,59 +1,29 @@
 import React from 'react'
+import { useParams } from 'react-router-dom'
 import Header from '../../component/Header'
 import TopBar from '../../component/TopBar'
+import useFetch from '../../Hooks/useFetch'
 
 const ProductDetail = () => {
+  const { id } = useParams();
+  const { data, loading, error } = useFetch(`https://fakestoreapi.com/products/${id}`);
+  //console.log(data)
   return (
     <>
       <Header />
-      <TopBar />
+      <TopBar title={data.title} loading={loading} />
+
       <section className="product-details spad">
         <div className="container">
           <div className="row">
             <div className="col-lg-6 col-md-6">
-              <div className="product__details__pic">
-                <div className="product__details__pic__item">
-                  <img className="product__details__pic__item--large" src="img/product/details/product-details-1.jpg" alt="" />
-                </div>
-                <div className="product__details__pic__slider owl-carousel owl-loaded owl-drag">
 
+              <img src={loading ? data.image : <div>Loading...</div>} alt={data.title} />
 
-
-
-                  <div className="owl-stage-outer">
-                    <div className="owl-stage" style="transform: translate3d(-575px, 0px, 0px); transition: all 1.2s ease 0s; width: 1725px;">
-                      <div className="owl-item cloned" style="width: 123.75px; margin-right: 20px;">
-                        <img data-imgbigurl="img/product/details/product-details-2.jpg" src="img/product/details/thumb-1.jpg" alt="" /></div>
-                      <div className="owl-item cloned" style="width: 123.75px; margin-right: 20px;">
-                        <img data-imgbigurl="img/product/details/product-details-3.jpg" src="img/product/details/thumb-2.jpg" alt="" />
-                      </div><div className="owl-item cloned" style="width: 123.75px; margin-right: 20px;">
-                        <img data-imgbigurl="img/product/details/product-details-5.jpg" src="img/product/details/thumb-3.jpg" alt="" /></div>
-                      <div className="owl-item cloned" style="width: 123.75px; margin-right: 20px;">
-                        <img data-imgbigurl="img/product/details/product-details-4.jpg" src="img/product/details/thumb-4.jpg" alt="" /></div>
-                      <div className="owl-item active" style="width: 123.75px; margin-right: 20px;">
-                        <img data-imgbigurl="img/product/details/product-details-2.jpg" src="img/product/details/thumb-1.jpg" alt="" /></div>
-                      <div className="owl-item active" style="width: 123.75px; margin-right: 20px;">
-                        <img data-imgbigurl="img/product/details/product-details-3.jpg" src="img/product/details/thumb-2.jpg" alt="" /></div>
-                      <div className="owl-item active" style="width: 123.75px; margin-right: 20px;">
-                        <img data-imgbigurl="img/product/details/product-details-5.jpg" src="img/product/details/thumb-3.jpg" alt="" /></div>
-                      <div className="owl-item active" style="width: 123.75px; margin-right: 20px;">
-                        <img data-imgbigurl="img/product/details/product-details-4.jpg" src="img/product/details/thumb-4.jpg" alt="" /></div>
-                      <div className="owl-item cloned" style="width: 123.75px; margin-right: 20px;">
-                        <img data-imgbigurl="img/product/details/product-details-2.jpg" src="img/product/details/thumb-1.jpg" alt="" /></div>
-                      <div className="owl-item cloned" style="width: 123.75px; margin-right: 20px;">
-                        <img data-imgbigurl="img/product/details/product-details-3.jpg" src="img/product/details/thumb-2.jpg" alt="" /></div>
-                      <div className="owl-item cloned" style="width: 123.75px; margin-right: 20px;">
-                        <img data-imgbigurl="img/product/details/product-details-5.jpg" src="img/product/details/thumb-3.jpg" alt="" /></div>
-                      <div className="owl-item cloned" style="width: 123.75px; margin-right: 20px;">
-                        <img data-imgbigurl="img/product/details/product-details-4.jpg" src="img/product/details/thumb-4.jpg" alt="" /></div></div></div>
-                  <div className="owl-nav disabled"><button type="button" role="presentation" className="owl-prev"><span aria-label="Previous">‹</span></button>
-                    <button type="button" role="presentation" className="owl-next"><span aria-label="Next">›
-                    </span></button></div><div className="owl-dots disabled"><button role="button" className="owl-dot active"><span></span></button></div></div>
-              </div>
             </div>
             <div className="col-lg-6 col-md-6">
               <div className="product__details__text">
-                <h3>Vetgetable’s Package</h3>
+                <h3>{loading ? data.title : <div>Loading...</div>}</h3>
                 <div className="product__details__rating">
                   <i className="fa fa-star"></i>
                   <i className="fa fa-star"></i>
@@ -62,10 +32,8 @@ const ProductDetail = () => {
                   <i className="fa fa-star-half-o"></i>
                   <span>(18 reviews)</span>
                 </div>
-                <div className="product__details__price">$50.00</div>
-                <p>Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vestibulum ac diam sit amet quam
-                  vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Vestibulum ac diam sit amet
-                  quam vehicula elementum sed sit amet dui. Proin eget tortor risus.</p>
+                <div className="product__details__price">${loading ? data.price : <div>Loading...</div>}</div>
+                <p>{loading ? data.description : <div>Loading...</div>}</p>
                 <div className="product__details__quantity">
                   <div className="quantity">
                     <div className="pro-qty"><span className="dec qtybtn">-</span>
@@ -107,24 +75,7 @@ const ProductDetail = () => {
                   <div className="tab-pane active" id="tabs-1" role="tabpanel">
                     <div className="product__details__tab__desc">
                       <h6>Products Infomation</h6>
-                      <p>Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
-                        Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus. Vivamus
-                        suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam sit amet quam
-                        vehicula elementum sed sit amet dui. Donec rutrum congue leo eget malesuada.
-                        Vivamus suscipit tortor eget felis porttitor volutpat. Curabitur arcu erat,
-                        accumsan id imperdiet et, porttitor at sem. Praesent sapien massa, convallis a
-                        pellentesque nec, egestas non nisi. Vestibulum ac diam sit amet quam vehicula
-                        elementum sed sit amet dui. Vestibulum ante ipsum primis in faucibus orci luctus
-                        et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam
-                        vel, ullamcorper sit amet ligula. Proin eget tortor risus.</p>
-                      <p>Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Lorem
-                        ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit aliquet
-                        elit, eget tincidunt nibh pulvinar a. Cras ultricies ligula sed magna dictum
-                        porta. Cras ultricies ligula sed magna dictum porta. Sed porttitor lectus
-                        nibh. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
-                        Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Sed
-                        porttitor lectus nibh. Vestibulum ac diam sit amet quam vehicula elementum
-                        sed sit amet dui. Proin eget tortor risus.</p>
+                      <p>{loading ? data.description : <div>Loading...</div>}</p>
                     </div>
                   </div>
                   <div className="tab-pane" id="tabs-2" role="tabpanel">

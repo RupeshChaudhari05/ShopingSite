@@ -7,9 +7,10 @@ import useFetch from '../../Hooks/useFetch'
 
 export const Home = () => {
 
-  const { data, loading, error } = useFetch("https://fakestoreapi.com/products/categories");
-
-  console.log(data);
+  const { data, loading, error } = useFetch("https://fakestoreapi.com/products");
+  const addItem = (item) => {
+    console.log(item)
+  }
   return <>
     <Header />
     <section className="hero">
@@ -42,20 +43,20 @@ export const Home = () => {
                 </div>
               </div>
             </div>
-
             <div className='row'>
-
-              <div className="col-md-3">
-                <div className="product__item">
-                  <img src='https://technext.github.io/ogani/img/product/product-8.jpg' alt="" />
-                  <center><button type='button' className='site-btn-s'>Add to Cart</button></center>
-                  <div className="product__item__text">
-                    <h6><a href="#">Crab Pool Security</a></h6>
-                    <h5>$30.00</h5>
+              {loading ? <h1>Loading...</h1> : data.map((item, i) => {
+                return <div className="col-md-3" key={i}>
+                  <div className="product__item">
+                    <Link to={`/detail/${item.id}`}><img src={item.image} alt={item.title} /></Link>
+                    <center><button type='button' className='site-btn-s' onClick={() => addItem(item.id)}>Add to Cart</button></center>
+                    <div className="product__item__text">
+                      <h6><a href="#">{item.title}</a></h6>
+                      <h5>${item.price}</h5>
+                    </div>
                   </div>
                 </div>
-              </div>
-
+              })}
+              <span>{error}</span>
             </div>
 
 

@@ -33,7 +33,7 @@ const CategoryPage = () => {
   return (
     <>
       <Header />
-      <TopBar title={id} />
+      <TopBar title={id} loading={loading} />
       <div className="container product spad">
         <div className='row'>
           <div className="col-md-3">
