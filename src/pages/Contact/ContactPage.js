@@ -1,9 +1,47 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Footer from '../../component/Footer'
 import Header from '../../component/Header'
 import TopBar from '../../component/TopBar'
+import { saveMessage } from '../../Redux/Actions/addMessageAction'
+import { ToastContainer, toast } from 'react-toastify';
 
 const ContactPage = () => {
+  const intitialState = {
+    fullname: "",
+    email: "",
+    message: ""
+  }
+
+  const [state, setState] = useState(intitialState);
+  const dispatch = useDispatch();
+  const mystate = useSelector(state => state.message.listofmessage);
+  const handleChange = (e) => {
+    //console.log(e.target.value);
+    setState({ ...state, [e.target.name]: e.target.value });
+  }
+
+  const formSubmit = (e) => {
+    e.preventDefault();
+    //console.log(mystate);
+    const d = mystate.filter((item) => {
+      return item.email === state.email
+    })
+    // console.log(d);
+    if (d.length === 0) {
+      dispatch(saveMessage(state));
+      toast("Sucessfully sent")
+    } else {
+      toast("Allredy sent")
+    }
+
+  }
+
+
+
+
+
+
   return (
     <>
       <Header />
@@ -110,16 +148,16 @@ const ContactPage = () => {
                 </div>
               </div>
             </div>
-            <form action="#">
+            <form action="#" onSubmit={formSubmit}>
               <div className="row">
                 <div className="col-lg-6 col-md-6">
-                  <input type="text" placeholder="Your name" />
+                  <input type="text" placeholder="Your name" name="fullname" onChange={handleChange} />
                 </div>
                 <div className="col-lg-6 col-md-6">
-                  <input type="text" placeholder="Your Email" />
+                  <input type="text" placeholder="Your Email" name="email" onChange={handleChange} />
                 </div>
                 <div className="col-lg-12 text-center">
-                  <textarea placeholder="Your message"></textarea>
+                  <textarea placeholder="Your message" onChange={handleChange} name="message"></textarea>
                   <button type="submit" className="site-btn">SEND MESSAGE</button>
                 </div>
               </div>
@@ -134,6 +172,7 @@ const ContactPage = () => {
 
 
       </div>
+      <ToastContainer />
       <Footer />
     </>
   )

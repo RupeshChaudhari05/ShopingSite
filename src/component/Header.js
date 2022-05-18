@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom'
 import { Logout } from '../Redux/Actions/LoginAction';
 
 const Header = () => {
-
   const token = useSelector(state => state);
-  console.log(token.LoginData.loginToken);
+  //console.log(token.LoginData.loginToken);
   const cardcount = useSelector(state => state.cartData.add_cart);
   const disp = useDispatch();
   const logout = () => {
     disp(Logout());
   }
+
   return <>
     <header className="header">
       <div className="header__top">

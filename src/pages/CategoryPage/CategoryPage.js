@@ -1,39 +1,61 @@
 import axios from 'axios'
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import Header from '../../component/Header'
 import TopBar from '../../component/TopBar'
 import useFetch from '../../Hooks/useFetch'
+import { addCart } from '../../Redux/Actions/addCartData'
+import { ToastContainer, toast } from 'react-toastify';
+import Footer from '../../component/Footer'
 
 const CategoryPage = () => {
   let { id } = useParams();
   const { data, loading, error } = useFetch(`https://fakestoreapi.com/products/category/${id}`);
-
-  const addItem = async (myid) => {
-    //https://fakestoreapi.com/carts
-
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
-
-    today = yyyy + '-' + mm + '-' + dd;
+  const dispatch = useDispatch();
+  const cartData = useSelector(state => state.cartData.add_cart);
 
 
-    const g = {
-      userid: 1,
-      date: today,
-      products: [{ productId: myid, quantity: 1 }]
+  const addItem = async (data) => {
+
+    //this code for online api saving data on server
+    // var today = new Date();
+    // var dd = String(today.getDate()).padStart(2, '0');
+    // var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    //var yyyy = today.getFullYear();
+    //today = yyyy + '-' + mm + '-' + dd;
+    //const g = {
+    //   userid: 1,
+    //  date: today,
+    //   products: [{ productId: myid, quantity: 1 }]
+    //// }
+    // const response = await axios.post(`https://fakestoreapi.com/carts`, g);
+    // console.log(response.status);
+
+    // this code for local storage saving data on Redux storage
+
+
+    const sd = cartData.filter((item) => { return item.id === data.id });
+    //console.log(sd)
+    if (sd.length == 0) {
+      dispatch(addCart(data));
+      toast("Sucessfully added to cart")
+    } else {
+      console.log("Allredy present in cart");
+      toast("Allredy present in cart")
     }
-    const response = await axios.post(`https://fakestoreapi.com/carts`, g);
-    console.log(response.status);
+
+
+
+
+
 
   }
 
   return (
     <>
       <Header />
-      <TopBar title={id} loading={loading} />
+      <TopBar title={id} loding={true} />
       <div className="container product spad">
         <div className='row'>
           <div className="col-md-3">
@@ -112,7 +134,7 @@ const CategoryPage = () => {
                 return <div className="col-md-3" key={i}>
                   <div className="product__item" >
                     <Link to={`product/${item.id}`} ><img src={item.image} alt={item.title} height={200} /></Link>
-                    <center><button type='button' className='site-btn-s' onClick={() => addItem(item.id)}>Add to Cart</button></center>
+                    <center><button type='button' className='site-btn-s' onClick={() => addItem(item)}>Add to Cart</button></center>
                     <div className="product__item__text">
                       <h6><a href="#">{item.title}</a></h6>
                       <h5>${item.price}</h5>
@@ -125,6 +147,8 @@ const CategoryPage = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
+      <Footer />
     </>
   )
 }
