@@ -6,24 +6,22 @@ import useFetch from '../../Hooks/useFetch'
 
 const ProductDetail = () => {
   const { id } = useParams();
-  const { data, loading, error } = useFetch(`https://fakestoreapi.com/products/${id}`);
-  //console.log(data)
+  const { data, error } = useFetch(`https://fakestoreapi.com/products/${id}`);
+  console.log(data)
+
   return (
     <>
       <Header />
-      <TopBar title={data.title} loading={loading} />
-
+      <TopBar title={data.title} loding={true} />
       <section className="product-details spad">
         <div className="container">
           <div className="row">
             <div className="col-lg-6 col-md-6">
-
-              <img src={loading ? data.image : <div>Loading...</div>} alt={data.title} />
-
+              <img src={data.image} alt={data.title} />
             </div>
             <div className="col-lg-6 col-md-6">
               <div className="product__details__text">
-                <h3>{loading ? data.title : <div>Loading...</div>}</h3>
+                <h3>{data.title}</h3>
                 <div className="product__details__rating">
                   <i className="fa fa-star"></i>
                   <i className="fa fa-star"></i>
@@ -32,8 +30,8 @@ const ProductDetail = () => {
                   <i className="fa fa-star-half-o"></i>
                   <span>(18 reviews)</span>
                 </div>
-                <div className="product__details__price">${loading ? data.price : <div>Loading...</div>}</div>
-                <p>{loading ? data.description : <div>Loading...</div>}</p>
+                <div className="product__details__price">${data.price}</div>
+                <p>{data.description}</p>
                 <div className="product__details__quantity">
                   <div className="quantity">
                     <div className="pro-qty"><span className="dec qtybtn">-</span>
@@ -75,7 +73,7 @@ const ProductDetail = () => {
                   <div className="tab-pane active" id="tabs-1" role="tabpanel">
                     <div className="product__details__tab__desc">
                       <h6>Products Infomation</h6>
-                      <p>{loading ? data.description : <div>Loading...</div>}</p>
+                      <p>{data.description}</p>
                     </div>
                   </div>
                   <div className="tab-pane" id="tabs-2" role="tabpanel">

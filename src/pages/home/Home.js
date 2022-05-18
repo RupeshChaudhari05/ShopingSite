@@ -1,15 +1,35 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Footer from '../../component/Footer'
 import Header from '../../component/Header'
 import Sidebar from '../../component/Sidebar'
 import useFetch from '../../Hooks/useFetch'
+import { addCart } from '../../Redux/Actions/addCartData'
+import { ToastContainer, toast } from 'react-toastify';
 
 export const Home = () => {
 
   const { data, loading, error } = useFetch("https://fakestoreapi.com/products");
+  const dispatch = useDispatch();
+  const cartData = useSelector(state => state.cartData.add_cart);
+  //console.log(cartData);
+
   const addItem = (item) => {
-    console.log(item)
+    const data = item;
+    console.log(cartData)
+
+    const sd = cartData.filter((item) => { return item.id === data.id });
+    //console.log(sd)
+    if (sd.length == 0) {
+      dispatch(addCart(data));
+      toast("Sucessfully added to cart")
+    } else {
+      console.log("Allredy present in cart");
+      toast("Allredy present in cart")
+    }
+
+
   }
   return <>
     <Header />
@@ -48,7 +68,7 @@ export const Home = () => {
                 return <div className="col-md-3" key={i}>
                   <div className="product__item">
                     <Link to={`/detail/${item.id}`}><img src={item.image} alt={item.title} /></Link>
-                    <center><button type='button' className='site-btn-s' onClick={() => addItem(item.id)}>Add to Cart</button></center>
+                    <center><button type='button' className='site-btn-s' onClick={() => addItem(item)}>Add to Cart</button></center>
                     <div className="product__item__text">
                       <h6><a href="#">{item.title}</a></h6>
                       <h5>${item.price}</h5>
@@ -64,6 +84,7 @@ export const Home = () => {
         </div>
       </div>
     </section>
+    <ToastContainer />
     <Footer />
   </>
 }

@@ -1,9 +1,17 @@
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom'
+import { Logout } from '../Redux/Actions/LoginAction';
 
 const Header = () => {
 
-  const token = localStorage.getItem('token');
+  const token = useSelector(state => state);
+  console.log(token.LoginData.loginToken);
+  const cardcount = useSelector(state => state.cartData.add_cart);
+  const disp = useDispatch();
+  const logout = () => {
+    disp(Logout());
+  }
   return <>
     <header className="header">
       <div className="header__top">
@@ -35,7 +43,7 @@ const Header = () => {
                   </ul>
                 </div>
                 <div className="header__top__right__auth">
-                  {token ? <Link to="/logout">Logout</Link> : <Link to="/login"><i className="fa fa-user"></i> Login</Link>}
+                  {token.LoginData.loginToken ? <div onClick={logout}>Logout</div> : <Link to="/login"><i className="fa fa-user"></i> Login</Link>}
                 </div>
               </div>
             </div>
@@ -52,18 +60,10 @@ const Header = () => {
           <div className="col-lg-6">
             <nav className="header__menu">
               <ul>
-                <li className="active"><Link to="./index.html">Home</Link></li>
-                <li><Link to="./shop-grid.html">Shop</Link></li>
-                <li><Link to="#">Pages</Link>
-                  <ul className="header__menu__dropdown">
-                    <li><Link to="/">Shop Details</Link></li>
-                    <li><Link to="/">Shoping Cart</Link></li>
-                    <li><Link to="/">Check Out</Link></li>
-                    <li><Link to="/">Blog Details</Link></li>
-                  </ul>
-                </li>
-                <li><Link to="/">Blog</Link></li>
-                <li><Link to="/">Contact</Link></li>
+                <li className="active"><Link to="/">Home</Link></li>
+                <li><Link to="/shop">Shop</Link></li>
+                <li><Link to="/blog">Blog</Link></li>
+                <li><Link to="/contact">Contact</Link></li>
               </ul>
             </nav>
           </div>
@@ -71,7 +71,7 @@ const Header = () => {
             <div className="header__cart">
               <ul>
                 <li><Link to="#"><i className="fa fa-heart"></i> <span>1</span></Link></li>
-                <li><Link to="/cart"><i className="fa fa-shopping-bag"></i> <span>3</span></Link></li>
+                <li><Link to="/cart"><i className="fa fa-shopping-bag"></i> <span>{cardcount.length}</span></Link></li>
               </ul>
               <div className="header__cart__price">item: <span>$150.00</span></div>
             </div>

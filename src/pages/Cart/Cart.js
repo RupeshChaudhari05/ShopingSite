@@ -1,18 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Header from '../../component/Header'
 import useFetch from '../../Hooks/useFetch'
+import { addCart } from '../../Redux/Actions/addCartData'
+
 
 const Cart = () => {
-  const { data, loading, error } = useFetch("https://fakestoreapi.com/carts");
+  //const { data, loading, error } = useFetch("https://fakestoreapi.com/carts");
+  const ff = useSelector(state => state.cartData.add_cart);
+
+
   return (
     <>
       <Header />
       <div className='container'>
         <div className='row'>
-          {loading ? <h1>Loading...</h1> : data.map((item, i) => {
+          {ff.map((item, i) => {
             return <div className='col-lg-12' key={i}>
-              <div className='cart__title'>Date{item.date}</div>
-              <div className=''>Quantity : {item.products[0].productId}</div>
+              <div className='cart__title'><strong><h5>Product Name :{item.title}</h5></strong></div>
+
+              <div className='col-lg-6'><img src={item.image} width={200} /></div>
+
+
+
+              <div className='cart__title'><strong>Product Price : ${item.price}</strong></div>
+              <hr />
             </div>
           })}
 
