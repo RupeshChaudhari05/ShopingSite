@@ -11,7 +11,6 @@ const Header = () => {
   const logout = () => {
     disp(Logout());
   }
-
   return <>
     <header className="header">
       <div className="header__top">
